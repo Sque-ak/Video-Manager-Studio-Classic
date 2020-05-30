@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import tkinter as tk
+import cv2 as cv
 import const
 
 class Main(tk.Frame):
@@ -36,6 +37,14 @@ def main():
     app = Main(canvas)
     app.pack()
     canvas.mainloop()
+
+    videocam = cv.VideoCapture("RTPS:URL")
+
+    while (1):
+        ret, frame = videocam.read()
+        cv.imshow('VideCam', frame)
+
+        cv.waitKey(1)
 
 if __name__ == "__main__":
     main()
