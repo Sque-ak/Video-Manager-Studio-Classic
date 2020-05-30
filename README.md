@@ -17,7 +17,7 @@ Sorry to my English, my English is not so good... <br />
 - 4. To finish the plan. 10%
 ```
 <br /> <br />
-I want to output the real time video to window through rtsp-url.
+I want to output more window with cameras.
 
 ###
 ***
