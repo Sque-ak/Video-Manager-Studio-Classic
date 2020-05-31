@@ -14,8 +14,8 @@ Sorry to my English, my English is not so good... <br />
 + 1. Make a window. 100%
 + 2. Make more windows inside the main window. 100%
 + 3. The window must show us the real time video with cameras. 100%
-- 4. Make the gui interface. 0%
-- 5. Need to optimize the app. 0%
+- 4. Make the gui interface. 20%
+- 5. Need to optimize the app. 2%
 - 6. Manager the add cameras. 0%
 - 7. Mini-server with options for the app. 0%
 - 8. To finish the plan. 40%
