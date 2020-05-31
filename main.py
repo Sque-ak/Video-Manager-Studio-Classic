@@ -41,10 +41,29 @@ class VMS:
             self.canvas[i] = tkinter.Canvas(window, width = 200, height = 200, bg=const.SECONDCOLOR, highlightthickness=0)
             self.canvas[i].grid(row = i//4, column = i%4)
 
+        self.node_tool_bar()
 
         self.delay = 15
         self.update_stream()
         self.window.mainloop()
+
+    #Toolbar;
+    def node_tool_bar(self):
+        #Toolbar create:
+        toolbar = tkinter.Menu(self.window)
+        self.window.config(menu=toolbar)
+        
+        #Toolbar items:
+        #   1. File -> (Exit);
+        #
+
+        fileItem = tkinter.Menu(toolbar)
+        fileItem.add_command(label="Exit", command=self.onExit)
+        toolbar.add_cascade(label="File", menu=fileItem)
+
+    #This is function for exit;
+    def onExit(self):
+        self.window.quit()
 
     #Rpeater frame;
     def update_stream(self):
@@ -71,9 +90,6 @@ class VideoCamera:
 
         self.width = self.urlCam.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.urlCam.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        
-    def get_url(self):
-        return self.urlCam
 
     #Destroy the camera;
     def __del__(self):
