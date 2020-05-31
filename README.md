@@ -1,5 +1,5 @@
 # VIDEO MANAGER STUDIO CLASSIC
-## Version 0.1
+## Version 0.2
 
 Hi there! This is my first project on python. <br />
 
@@ -12,12 +12,16 @@ Sorry to my English, my English is not so good... <br />
 
 ```diff
 + 1. Make a window. 100%
-- 2. Make more windows inside the main window. 0%
-- 3. The window must show us the real time video with cameras. 10%
-- 4. To finish the plan. 10%
++ 2. Make more windows inside the main window. 100%
++ 3. The window must show us the real time video with cameras. 100%
+- 4. Make the gui interface. 0%
+- 5. Need to optimize the app. 0%
+- 6. Manager the add cameras. 0%
+- 7. Mini-server with options for the app. 0%
+- 8. To finish the plan. 40%
 ```
 <br /> <br />
-I want to output more window with cameras.
+JUST DO IT!
 
 ###
 ***

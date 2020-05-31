@@ -24,27 +24,38 @@ class VMS:
         self.window.config(bg=const.FIRSTCOLOR)
         self.window.wm_state('zoomed')
 
-        #Make a window grid;
-        self.testcamera = VideoCamera("rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov")
-        self.canvas = tkinter.Canvas(window, width = 200, height = 200)
-        self.canvas.pack(expand=True)
+        self.urlListCam = {
+        'Camera_0': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov',
+        'Camera_1': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov',
+        'Camera_2': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov',
+        'Camera_3': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov',
+        'Camera_4': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov',
+        'Camera_5': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov'}
 
-        self.delay = 20
-        self.update()
+        self.cameras = []
 
+        #Make grid of windows;
+        self.canvas = [i for i in range(len(self.urlListCam))]
+        for i in range(len(self.urlListCam)):
+            self.cameras.append(VideoCamera(self.urlListCam['Camera_' + str(i)])) #Add all cameras on list.
+            self.canvas[i] = tkinter.Canvas(window, width = 200, height = 200, bg=const.SECONDCOLOR, highlightthickness=0)
+            self.canvas[i].grid(row = i//4, column = i%4)
+
+
+        self.delay = 15
+        self.update_stream()
         self.window.mainloop()
 
     #Rpeater frame;
-    def update(self):
-        ret, frame = self.testcamera.get_frame()
-
-        if ret:
-            self.picter = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-            self.canvas.create_image(0, 0, image = self.picter, anchor = tkinter.NW)
-            
-        self.window.after(self.delay, self.update)
-
-
+    def update_stream(self):
+        #Update frame of cameras.
+        self.stream = [i for i in range(len(self.urlListCam))]
+        for i in range(len(self.urlListCam)):
+            self.stream[i] = PIL.ImageTk.PhotoImage(PIL.Image.fromarray(self.cameras[i].get_frame()))
+            self.canvas[i].create_image(0, 0, image = self.stream[i], anchor = tkinter.NW)
+        
+        self.window.after(self.delay, func=lambda: self.update_stream())
+  
 """
 Make a videocamera;
 
@@ -57,28 +68,26 @@ class VideoCamera:
         self.urlCam = cv2.VideoCapture(url)
         if not self.urlCam.isOpened():
            raise ValueError("URL rtsp is wrong!", url)
+
         self.width = self.urlCam.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.urlCam.get(cv2.CAP_PROP_FRAME_HEIGHT)
         
+    def get_url(self):
+        return self.urlCam
 
-    #Destroy the camera; 
+    #Destroy the camera;
     def __del__(self):
         if self.urlCam.isOpened():
             self.urlCam.release()
 
     #Get frame with camera;
-    #@return {{Boolean}ret, {array}frame}
+    #@return {{Boolean}ret, {array}frame};
     def get_frame(self):
-        if self.urlCam.isOpened():
-            ret, frame = self.urlCam.read()
-            frame = cv2.resize(frame,(200,200))
-            #Convert to BGR if is true.
-            if ret:
-                return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-            else:
-                return (ret, None)
-        else:
-            return (ret, None)
+        ret, frame = self.urlCam.read()
+        frame = cv2.resize(frame,(200,200))
+        #Convert to BGR;
+        return (cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+
 
 if __name__ == "__main__":
     VMS(tkinter.Tk(), const.NAMEAPP + " " + const.VERSION, '800x600')
