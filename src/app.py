@@ -26,37 +26,50 @@ class VMS:
         self.window.config(bg=const.FIRSTCOLOR)
         self.window.wm_state('zoomed')
 
-        self.urlListCam = {
-        'Camera_0': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov',
-        'Camera_1': 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_175k.mov'} 
-
         self.cameras = []
 
-        #Make grid of windows;
-        self.canvas = [i for i in range(len(self.urlListCam))]
-        for i in range(len(self.urlListCam)):
-            self.cameras.append(videocam.VideoCamera(self.urlListCam['Camera_' + str(i)])) #Add all cameras on list.
-            self.canvas[i] = tkinter.Canvas(window, width = const.SIZE_VIEWCAM, height = const.SIZE_VIEWCAM, bg=const.SECONDCOLOR, highlightthickness=0)
-            #self.canvas[i].grid(row = i//4, column = i%4)
-            self.canvas[i].place(x = (const.SIZE_VIEWCAM+5)*(i%4), y = (const.SIZE_VIEWCAM+5)*(i//4)) 
-            print("№" + str(i) + ": Done")
+        #Loading img part:
+        self.imgNovid = PIL.ImageTk.PhotoImage(PIL.Image.open("src/img/novid_" + str(const.SIZE_VIEWCAM) + ".jpg"))
+        #end;
 
+        #Make grid of windows but canvas alone;
+        for i in range(len(const.LISTCAM)):
+            self.cameras.append(videocam.VideoCamera(const.LISTCAM['Camera_' + str(i)])) #Add all cameras on list.
+
+            self.canvas = tkinter.Canvas(window, 
+                width = (const.SIZE_VIEWCAM)*(const.MAXCAMERAS//4), 
+                height = (const.SIZE_VIEWCAM)*(const.MAXCAMERAS//4), 
+                bg=const.SECONDCOLOR, highlightthickness=0)
+                
+            self.canvas.place(relx = 1, rely = 0, anchor = tkinter.NE) 
+            print("№" + str(i) + ": Done")
 
         self.nodeToolBar()
         self.nodeStatusBar()
+        self.nodeNovid()
 
         self.delay = 15
         self.updateStream()
         self.window.mainloop()
 
+    # Area without cameras;
+    def nodeNovid(self):
+        for i in range(const.MAXCAMERAS):
+            self.canvas.create_image((const.SIZE_VIEWCAM+5)*(i%4), 
+                (const.SIZE_VIEWCAM+5)*(i//4), 
+                image = self.imgNovid, anchor = tkinter.NW)
+
 
     #Rpeater frame;
     def updateStream(self):
         #Update frame of cameras.
-        self.stream = [i for i in range(len(self.urlListCam))]
-        for i in range(len(self.urlListCam)):
+        self.stream = [i for i in range(len(const.LISTCAM))]
+        for i in range(len(const.LISTCAM)):
             self.stream[i] = PIL.ImageTk.PhotoImage(PIL.Image.fromarray(self.cameras[i].getFrame()))
-            self.canvas[i].create_image(0, 0, image = self.stream[i], anchor = tkinter.NW)
+
+            self.canvas.create_image((const.SIZE_VIEWCAM+5)*(i%4), 
+                (const.SIZE_VIEWCAM+5)*(i//4), 
+                image = self.stream[i], anchor = tkinter.NW)
         
         self.window.after(self.delay, func=lambda: self.updateStream())
 
