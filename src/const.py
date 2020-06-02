@@ -4,11 +4,12 @@ import PIL.Image, PIL.ImageTk
 #This is global constants declaration;
 NAMEAPP = "Video Manager Studio Classic"
 VERSION = "0.2"
+SCREEN_W = 1200
+SCREEN_H = 800
 
 #These variables may change in the future;
 MAXCAMERAS = 16
 SIZE_VIEWCAM = 200
-STATUSAPP = "Good"
 
 #Color list;
 FIRSTCOLOR = "#252525"

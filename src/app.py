@@ -8,7 +8,6 @@ import videocam
 
 """
 Main class, make a global window;
-
 @param {Object} window : Main window;
 @param {String} title : Name the app;
 @param {Vector2x} geometry  : Window size after minimizing;
@@ -22,7 +21,7 @@ class VMS:
         self.window.title(title)
         self.window.geometry(geometry)
 
-        self.window.minsize(width = 1200, height=800)
+        self.window.minsize(width = const.SCREEN_W, height=const.SCREEN_H)
         self.window.config(bg=const.FIRSTCOLOR)
         self.window.wm_state('zoomed')
 
@@ -44,6 +43,7 @@ class VMS:
             self.canvas.place(relx = 1, rely = 0, anchor = tkinter.NE) 
             print("№" + str(i) + ": Done")
 
+        self.nodeInspector()
         self.nodeToolBar()
         self.nodeStatusBar()
         self.nodeNovid()
@@ -76,13 +76,17 @@ class VMS:
     #Inspector of cameras;
     def nodeInspector(self):
         pass
+#       for i in range(len(const.LISTCAM)):
+#          self.listCam = []
+#           self.listCam[i].append(tkinter.Label(text = "Camera №" + str(i) + " is work"))
+#           self.listCam[i].place(x = 20, y = 20 * i)
 
     #Status bar;
     def nodeStatusBar(self):
         self.statusbar = tkinter.Canvas(self.window, height = 16, bg=const.THREECOLOR, highlightthickness = 0)
         self.statusbar.place(rely = .98, relwidth = 1)
 
-        self.status = tkinter.Label(text = const.STATUSAPP)
+        self.status = tkinter.Label(text = "Good")
         self.status.place(rely = .97, relx = .01)
 
     #Toolbar;
@@ -102,4 +106,3 @@ class VMS:
     #This is function for exit;
     def onExit(self):
         self.window.quit()
-  
