@@ -8,4 +8,4 @@ import const
 import app
 
 if __name__ == "__main__":
-    app.VMS(Tk(), const.NAMEAPP + " " + const.VERSION, '1200x800')
+    app.VMS(Tk(), const.NAMEAPP + " " + const.VERSION)
