@@ -18,6 +18,8 @@ class VideoCamera:
         self._urlCam = cv2.VideoCapture(url)
         if not self._urlCam.isOpened():
            raise ValueError("URL rtsp is wrong!", url)
+        else:
+            self._status = "Connected"
 
         self.width = self._urlCam.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self._urlCam.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -27,11 +29,19 @@ class VideoCamera:
         if self._urlCam.isOpened():
             self._urlCam.release()
 
+    def getStatus(self):
+        #@return {string} : Return status the cam;
+        return self._status
+
+    def setStatus(self, newStatus):
+        #@param {string} : Change status the cam;
+        self._status = newStatus
+
     def getFrame(self):
         #Get frame of the camera;
         #@return {{Boolean}ret, {array}frame};
         ret, frame = self._urlCam.read()
-        frame = cv2.resize(frame,(const.SIZE_VIEWCAM, const.SIZE_VIEWCAM))
+        frame = cv2.resize(frame,(const.SIZE_VIEWCAM_X, const.SIZE_VIEWCAM_Y))
         #Convert to BGR;
         return (cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
@@ -43,5 +53,6 @@ class VideoCamera:
         @param {object} window: main window for update;
         """
         self._stream = PIL.ImageTk.PhotoImage(PIL.Image.fromarray(self.getFrame()))
-        self._canvas.create_image((const.SIZE_VIEWCAM+5)*(indX%4), (const.SIZE_VIEWCAM+5)*(indY//4), image = self._stream, anchor = tkinter.NW)
+        self._canvas.create_image((const.SIZE_VIEWCAM_X+5)*(indX%4), (const.SIZE_VIEWCAM_Y+5)*(indY//4), image = self._stream, anchor = tkinter.NW)
         window.after(const.DELAY, func=lambda: self.updFrame(indX, indY, window))
+        self._status = "Run"

@@ -9,12 +9,13 @@ DELAY = 15
 
 #These variables may change in the future;
 MAXCAMERAS = 16
-SIZE_VIEWCAM = 200
+SIZE_VIEWCAM_X = 300
+SIZE_VIEWCAM_Y = 200
 
 #Color list;
 FIRSTCOLOR = "#252525"
 SECONDCOLOR = "#303030"
-THREECOLOR = "#5A805A"
+THREECOLOR = "#0078D7"
 
 #Camera list;
 LISTCAM = {
