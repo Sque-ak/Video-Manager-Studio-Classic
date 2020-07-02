@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="gui">
+    <file>icons/ic_upd24.png</file>
+    <file>icons/ic_menubar24.png</file>
+  </qresource>
+</RCC>
