@@ -5,7 +5,6 @@ Hi there! This is my first project on python. <br />
 
 This is simple video manager (VMS or CMS... i'm think this is nevermind) for my job. <br />
 I try use OpenCV and Thinker for this project. <br />
-Sorry to my English, my English is not so good... <br />
 ***
 ### Project Plan
 "Nobody ever wrote down a plan to be broke, fat, lazy, or stupid. Those things are what happen when you don’t have a plan." — Larry Winget <br /> <br />
